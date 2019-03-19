@@ -17,7 +17,9 @@ renderer = null
 
 players = {
     p1: null,
-    p2: null
+    p2: null,
+    p3: null,
+    p4: null
 }
 
 /**
@@ -52,7 +54,7 @@ function initScene() {
 
     //positioning cameras
     cameras.default = new THREE.PerspectiveCamera(45, canvas.container.clientWidth / canvas.container.clientHeight, 0.1, 1000);
-    cameras.default.position.set(5, 5, 30);
+    cameras.default.position.set(0, 0, 30);
     cameras.default.lookAt(new THREE.Vector3(0, 0, 0));
     //Setting up current default camera as current camera
     cameras.current = cameras.default;
@@ -60,6 +62,7 @@ function initScene() {
     cameraControl = new THREE.OrbitControls(cameras.current, renderer.domElement);
 
     lAmbiente = new THREE.AmbientLight(0xffffff);
+    scene.add(lAmbiente);
 
     //FPS monitor
 	stats = new Stats();
@@ -69,8 +72,15 @@ function initScene() {
 	document.body.appendChild(stats.domElement);
 
     //Init player with controls
-    players.p1 = new Player("P1",null,new Control());
+    players.p1 = new Player("P1",null,new Control(),{label: true});
     players.p1.play(scene);
+
+    players.p2 = new Player("P2",null,new Control("i","l","k","j"),{label: true});
+    players.p2.play(scene);
+
+    players.p3 = new Player("P3",null,new Control("t","h","g","f"),{label: true});
+    players.p3.play(scene);
+
     initObjects();
 }
 
@@ -78,11 +88,10 @@ function initScene() {
  * Function to add all objects, lights (except for the ambienlight) and stuff to scene
  */
 function initObjects(){
-    mySound3D = new Sound(["./assets/songs/1.mp3"],200,scene,{
+    mySound3D = new Sound(["./assets/songs/1.mp3"],10,scene,{
         debug:true,
-        position: {x:0,y:0,z:0}
+        position: {x:0,y:10,z:0}
     });
-    mySound3D.play();
 }
 
 /**
@@ -107,7 +116,17 @@ function updateScene() {
     //Updating FPS monitor
     stats.update();
     //Sound Update
-    mySound3D.update(cameras.current);
+    mySound3D.update(players.p1.element);
+
+    for (const label of Object.keys(labels)) {
+        labels[label].lookAt(cameras.current.position);
+        if(label == "p1"){
+            labels[label].position.copy(players.p1.element.position);
+        }
+        if(label == "p2"){
+            labels[label].position.copy(players.p2.element.position);
+        }
+    }
 
 }
 

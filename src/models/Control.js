@@ -1,91 +1,143 @@
 class Control {
-
+    //myControl = new Control("w","d","s","a");
     constructor(up, right, down, left) {
         this.initControls();
-        
-        this.up.key = up || "w";
-        this.down.key = down || "s";
-        this.left.key = left || "a";
-        this.right.key = right || "d";
+        this.up = up || "w";
+        this.right = right || "d";
+        this.down = down || "s";
+        this.left = left || "a";
 
-        
+        this.element = null;
+
         this.initListeners();
     }
 
+    set up(key) {
+        this._up.key = key;
+    }
+
+    get up() {
+        return this._up.key;
+    }
+
+    set right(key) {
+        this._right.key = key;
+    }
+
+    get right() {
+        return this._right.key;
+    }
+
+    set down(key) {
+        this._down.key = key;
+    }
+
+    get down() {
+        return this._down.key;
+    }
+
+    set left(key) {
+        this._left.key = key;
+    }
+
+    get left() {
+        return this._left.key;
+    }
+
     initControls() {
-        this.up = {key:"",isPressed: false};
-        this.right = {key:"",isPressed: false};
-        this.down = {key:"",isPressed: false};
-        this.left = {key:"",isPressed: false};
+        this._up = { key: "", isPressed: false };
+        this._right = { key: "", isPressed: false };
+        this._down = { key: "", isPressed: false };
+        this._left = { key: "", isPressed: false };
     }
 
     initListeners() {
-        document.onkeydown = (e) => {
-            switch (e.key) {
-                case this.up.key:
-                   this.pressUp();
-                    break;
-                case this.right.key:
-                   this.pressRight();
-                    break;
-                case this.down.key:
-                   this.pressDown();
-                    break;
-                case this.left.key:
-                   this.pressLeft();
-                    break;
-            }
+
+
+    }
+
+    pressUp() {
+        this._up.isPressed = true;
+        this.element.position.y += 1;
+    }
+    pressRight() {
+        this._right.isPressed = true;
+        this.element.position.x += 1;
+    }
+    pressDown() {
+        this._down.isPressed = true;
+        this.element.position.y -= 1;
+    }
+    pressLeft() {
+        this._left.isPressed = true;
+        this.element.position.x -= 1;
+    }
+
+    releaseUp() {
+        this._up.isPressed = false;
+    }
+    releaseRight() {
+        this._right.isPressed = false;
+    }
+    releaseDown() {
+        this._down.isPressed = false;
+    }
+    releaseLeft() {
+        this._left.isPressed = false;
+    }
+
+}
+
+
+
+
+document.onkeydown = (e) => {
+    mySound3D.play();
+
+    for (let i = 0; i < Object.keys(players).length; i++) {
+        let key = Object.keys(players)[i];
+        if (players[key] == null) { return false; }
+        let elControl = players[key]["control"];
+        //console.log(`Tecla presionada: ${e.key} Tecla up de este jugador ${elControl.up}`)
+        switch (e.key) {
+            case elControl.up:
+                elControl.pressUp();
+                break;
+            case elControl.right:
+                elControl.pressRight();
+                break;
+            case elControl.down:
+                elControl.pressDown();
+                break;
+            case elControl.left:
+                elControl.pressLeft();
+                break;
         }
 
-        document.onkeyup = (e) => {
-            switch (e.key) {
-                case this.up.key:
-                   this.releaseUp();
-                    break;
-                case this.right.key:
-                   this.releaseRight();
-                    break;
-                case this.down.key:
-                   this.releaseDown();
-                    break;
-                case this.left.key:
-                   this.releaseLeft();
-                    break;
-            }
+    }
+}
+
+document.onkeyup = (e) => {
+    //console.log(Object.keys(players));
+    for (let i = 0; i < Object.keys(players).length; i++) {
+
+        let key = Object.keys(players)[i];
+        if (players[key] == null) { return false; }
+        let elControl = players[key]["control"];
+
+        switch (e.key) {
+            case elControl.up:
+                elControl.releaseUp();
+                break;
+            case elControl.right:
+                elControl.releaseRight();
+                break;
+            case elControl.down:
+                elControl.releaseDown();
+                break;
+            case elControl.left:
+                elControl.releaseLeft();
+                break;
         }
-    }
-
-    pressUp(){
-        this.up.isPressed = true;
-        console.log(`pressing Up`)
-    }
-    pressRight(){
-        this.right.isPressed = true;
-        console.log(`pressing Right`)
-    }
-    pressDown(){
-        this.down.isPressed = true;
-        console.log(`pressing Down`)
-    }
-    pressLeft(){
-        this.left.isPressed = true;
-        console.log(`pressing Left`)      
-    }
-
-    releaseUp(){
-            this.up.isPressed = true;
-            console.log(`releasing Up`)
-    }
-    releaseRight(){
-            this.right.isPressed = true
-            console.log(`releasing Right`)
-    }
-    releaseDown(){
-            this.down.isPressed = true;
-            console.log(`releasing Down`)
-    }
-    releaseLeft(){
-            this.left.isPressed = true;
-            console.log(`releasing Left`)      
     }
 }
