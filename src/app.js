@@ -78,7 +78,11 @@ function initScene() {
  * Function to add all objects, lights (except for the ambienlight) and stuff to scene
  */
 function initObjects(){
-    
+    mySound3D = new Sound(["./assets/songs/1.mp3"],200,scene,{
+        debug:true,
+        position: {x:0,y:0,z:0}
+    });
+    mySound3D.play();
 }
 
 /**
@@ -102,6 +106,8 @@ function updateScene() {
     cameraControl.update();
     //Updating FPS monitor
     stats.update();
+    //Sound Update
+    mySound3D.update(cameras.current);
 
 }
 
