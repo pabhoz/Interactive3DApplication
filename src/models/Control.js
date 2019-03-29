@@ -56,17 +56,17 @@ class Control {
 
 
     }
-    update(){
-        if(this._up.isPressed){
+    update() {
+        if (this._up.isPressed) {
             this.element.position.x -= this.velocity;
         }
-        if(this._right.isPressed){
+        if (this._right.isPressed) {
             this.element.position.z -= this.velocity;
         }
-        if(this._down.isPressed){
+        if (this._down.isPressed) {
             this.element.position.x += this.velocity;
         }
-        if(this._left.isPressed){
+        if (this._left.isPressed) {
             this.element.position.z += this.velocity;
         }
     }
@@ -122,6 +122,12 @@ document.onkeydown = (e) => {
                 break;
             case elControl.left:
                 elControl.pressLeft();
+                break;
+            case "2":
+                cameras.current = cameras.tpersona;
+                break;
+            case "1":
+                cameras.current = cameras.default;
                 break;
         }
 

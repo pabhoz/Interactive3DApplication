@@ -232,6 +232,12 @@ function updateScene() {
         }
     }
 
+    //cameras
+    cameras.tpersona.position.copy(players.p1.element.position);
+        cameras.tpersona.position.y += 300;
+        cameras.tpersona.position.x += 300;
+        cameras.tpersona.position.z -= 300;
+
 }
 
 function onWindowResize() {
