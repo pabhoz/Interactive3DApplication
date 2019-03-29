@@ -58,19 +58,19 @@ class Control {
 
     pressUp() {
         this._up.isPressed = true;
-        this.element.position.y += 1;
+        this.element.position.x -= 10;
     }
     pressRight() {
         this._right.isPressed = true;
-        this.element.position.x += 1;
+        this.element.position.z -= 10;
     }
     pressDown() {
         this._down.isPressed = true;
-        this.element.position.y -= 1;
+        this.element.position.x += 10;
     }
     pressLeft() {
         this._left.isPressed = true;
-        this.element.position.x -= 1;
+        this.element.position.z += 10;
     }
 
     releaseUp() {
@@ -92,7 +92,7 @@ class Control {
 
 
 document.onkeydown = (e) => {
-    mySound3D.play();
+    sound1.play();
 
     for (let i = 0; i < Object.keys(players).length; i++) {
         let key = Object.keys(players)[i];
