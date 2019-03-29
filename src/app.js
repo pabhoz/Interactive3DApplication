@@ -21,6 +21,7 @@ players = {
     p3: null,
     p4: null
 }
+collidableList = [];
 
 /**
  * Function to start program running a
@@ -50,6 +51,7 @@ function initScene() {
     renderer.setSize(canvas.container.clientWidth, canvas.container.clientHeight);
     renderer.setClearColor(0x000000, 1);
     renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     canvas.container.appendChild(renderer.domElement);
 
@@ -89,11 +91,12 @@ function initScene() {
     scene.add(lAmbiente);
 
     //Luz Spotlight
-	var spotLight = new THREE.SpotLight(0xff69b4,5.0, 1500.0, Math.PI/2,0.5,2.2);
+	var spotLight = new THREE.SpotLight(0xff69b4,3.0, 1500.0, Math.PI/4,0.5,2.2);
 	spotLight.position.set( 0, 600, 0 );
     spotLight.castShadow = true;
+    spotLight.shadowDarkness = 1;
 	scene.add(spotLight);
-	scene.add(new THREE.PointLightHelper(spotLight, 1));
+    scene.add(new THREE.PointLightHelper(spotLight, 1));
 
     //FPS monitor
 	stats = new Stats();
@@ -103,13 +106,14 @@ function initScene() {
 	document.body.appendChild(stats.domElement);
 
     //Init player with controls
-    players.p1 = new Player("P1",null,new Control(),{label: true});
+    players.p1 = new Player("P1",null,new Control(),{label: false});
     players.p1.play(scene);
+    spotLight.target = players.p1.element;
 
-    players.p2 = new Player("P2",null,new Control("i","l","k","j"),{label: true});
+    players.p2 = new Player("P2",null,new Control("i","l","k","j"),{label: false});
     players.p2.play(scene);
 
-    players.p3 = new Player("P3",null,new Control("t","h","g","f"),{label: true});
+    players.p3 = new Player("P3",null,new Control("t","h","g","f"),{label: false});
     players.p3.play(scene);
 
     initObjects();
@@ -171,6 +175,17 @@ function initObjects(){
     p2C2.receiveShadow = true;
     cuarto2.rotation.y = -Math.PI;
     scene.add(cuarto2);
+
+    colisionable = new THREE.Mesh(
+        new THREE.BoxGeometry(100,100,50),
+        new THREE.MeshBasicMaterial( {color:0x6a6a6a})
+    );
+    colisionable.position.set(-200,50,0);
+    scene.add(colisionable);
+
+    collidableList.push(colisionable);
+    collidableList.push(cuarto1);
+    collidableList.push(cuarto2);
 }
 
 /**
@@ -197,6 +212,15 @@ function updateScene() {
     //Sound Update
     sound1.update(players.p1.element);
     sound2.update(players.p1.element);
+
+    //Players controls
+    for (const player of Object.keys(players)) {
+        if( players[player] != null ){
+            players[player].control.update();
+            players[player].collidableBox.update(players[player].control);
+        }
+    }
+
 
     for (const label of Object.keys(labels)) {
         labels[label].lookAt(cameras.current.position);

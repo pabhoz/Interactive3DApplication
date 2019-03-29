@@ -17,9 +17,15 @@ class Player {
         if(mesh instanceof THREE.Mesh){
             this._element = mesh;
         }else{
-            let geometry = new THREE.BoxGeometry( 1, 1, 1 );
-            let material = new THREE.MeshBasicMaterial( {color: Utilities.randomHexColor(), wireframe:true} );
+            let geometry = new THREE.SphereGeometry(50,10,10)
+            let material = new THREE.MeshPhongMaterial( {color: Utilities.randomHexColor(), wireframe:false} );
             this._element = new THREE.Mesh( geometry, material );
+            var helper = new THREE.BoundingBoxHelper(this._element, 0xff0000);
+            helper.update();
+            this._element.add(helper);
+            this._element.position.y = 50.1;
+            this._element.castShadow = true;
+            this._element.receiveShadow = true;
         }
         this.control.element = this._element;
     }
@@ -40,6 +46,7 @@ class Player {
     }
 
     play(scene){
+        this.collidableBox = new CollidableBox(this._element,50);
         scene.add(this.element);
     }
 }

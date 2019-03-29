@@ -6,6 +6,7 @@ class Control {
         this.right = right || "d";
         this.down = down || "s";
         this.left = left || "a";
+        this.velocity = 20;
 
         this.element = null;
 
@@ -55,22 +56,32 @@ class Control {
 
 
     }
+    update(){
+        if(this._up.isPressed){
+            this.element.position.x -= this.velocity;
+        }
+        if(this._right.isPressed){
+            this.element.position.z -= this.velocity;
+        }
+        if(this._down.isPressed){
+            this.element.position.x += this.velocity;
+        }
+        if(this._left.isPressed){
+            this.element.position.z += this.velocity;
+        }
+    }
 
     pressUp() {
         this._up.isPressed = true;
-        this.element.position.x -= 10;
     }
     pressRight() {
         this._right.isPressed = true;
-        this.element.position.z -= 10;
     }
     pressDown() {
         this._down.isPressed = true;
-        this.element.position.x += 10;
     }
     pressLeft() {
         this._left.isPressed = true;
-        this.element.position.z += 10;
     }
 
     releaseUp() {
