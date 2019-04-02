@@ -6,6 +6,11 @@ class Player {
         this.element = element;
         this.label = this.getLabel();
 
+        this.inAir, this.isFalling, this.isJumping = false;
+        this.vy = 0;
+        this.vx = 20;
+        this.m = 5;
+
         if("label" in ap){
             if(ap.label){
                 this.showLabel();
@@ -32,6 +37,10 @@ class Player {
 
     get element(){
         return this._element;
+    }
+
+    updateControls(){
+        this.control.update(this.vx,this.vy,this.m);
     }
 
     getLabel(){

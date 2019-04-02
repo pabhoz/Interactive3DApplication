@@ -183,9 +183,28 @@ function initObjects(){
     colisionable.position.set(-200,50,0);
     scene.add(colisionable);
 
+    var powerup = new THREE.Mesh(
+        new THREE.BoxGeometry(200,50,200),
+        new THREE.MeshBasicMaterial( {color: 0xff0000, wireframe: true})
+    );
+    powerup.position.set(0,20,-300);
+    powerup.name = "thanos";
+    scene.add(powerup);
+    powerup2 = new THREE.Mesh(
+        new THREE.BoxGeometry(200,50,200),
+        new THREE.MeshBasicMaterial( {color: 0xff0000, wireframe: true})
+    );
+    powerup2.position.set(-180,70,-300);
+    powerup2.name="plataforma";
+    powerup2.isInUse = false;
+    scene.add(powerup2);
+
     collidableList.push(colisionable);
     collidableList.push(cuarto1);
     collidableList.push(cuarto2);
+    collidableList.push(plano);
+    collidableList.push(powerup);
+    collidableList.push(powerup2);
 }
 
 /**
@@ -216,7 +235,7 @@ function updateScene() {
     //Players controls
     for (const player of Object.keys(players)) {
         if( players[player] != null ){
-            players[player].control.update();
+            players[player].updateControls();
             players[player].collidableBox.update(players[player].control);
         }
     }
@@ -237,6 +256,10 @@ function updateScene() {
         cameras.tpersona.position.y += 300;
         cameras.tpersona.position.x += 300;
         cameras.tpersona.position.z -= 300;
+
+    if(powerup2.position.y > 70 && !powerup2.isInUse){
+            powerup2.position.y -= 1;
+    }
 
 }
 
