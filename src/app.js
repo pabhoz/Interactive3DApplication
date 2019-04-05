@@ -107,14 +107,13 @@ function initScene() {
 
     //Init player with controls
     players.p1 = new Player("P1",null,new Control(),{label: false});
-    players.p1.play(scene);
     spotLight.target = players.p1.element;
 
-    players.p2 = new Player("P2",null,new Control("i","l","k","j"),{label: false});
-    players.p2.play(scene);
+    //players.p2 = new Player("P2",null,new Control("i","l","k","j"),{label: false});
+    //players.p2.play(scene);
 
-    players.p3 = new Player("P3",null,new Control("t","h","g","f"),{label: false});
-    players.p3.play(scene);
+   // players.p3 = new Player("P3",null,new Control("t","h","g","f"),{label: false});
+   // players.p3.play(scene);
 
     initObjects();
 }
@@ -205,6 +204,15 @@ function initObjects(){
     collidableList.push(plano);
     collidableList.push(powerup);
     collidableList.push(powerup2);
+
+    players.p1.play(scene);
+
+    loadJSON("./assets/objects/teapot-claraio.json",(obj)=>{
+        scene.add(obj);
+    })
+    loadOBJ("./assets/objects/ninja/ninjaHead_Low.obj",(obj)=>{
+        scene.add(obj);
+    })
 }
 
 /**

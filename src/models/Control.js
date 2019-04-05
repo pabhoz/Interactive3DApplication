@@ -7,6 +7,8 @@ class Control {
         this.down = down || "s";
         this.left = left || "a";
         this.jump = jump || " ";
+        
+        this.isInAir, this.isFalling, this.isJumping = false;
 
         this.element = null;
 
@@ -65,10 +67,11 @@ class Control {
 
 
     }
-    update(vx,vy,m) {
+    update(vx,vy,m,jf) {
         this.vx = vx;
         this.vy = vy;
         this.m = m;
+        this.jumpForce = jf;
 
         if (this._up.isPressed) {
             this.element.position.x -= this.vx;
@@ -83,7 +86,11 @@ class Control {
             this.element.position.z += this.vx;
         }
         if (this._jump.isPressed) {
-            this.element.position.y += this.vy + 30;
+            console.log(`is Jumping: ${this.isJumping} and is In Air: ${this.isInAir}`)
+            if(!this.isJumping && !this.isInAir){
+                this.isJumping = true;
+                this.element.position.y += this.jumpForce;
+            } 
         }
     }
 

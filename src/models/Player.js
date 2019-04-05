@@ -6,7 +6,6 @@ class Player {
         this.element = element;
         this.label = this.getLabel();
 
-        this.inAir, this.isFalling, this.isJumping = false;
         this.vy = 0;
         this.vx = 20;
         this.m = 5;
@@ -40,7 +39,7 @@ class Player {
     }
 
     updateControls(){
-        this.control.update(this.vx,this.vy,this.m);
+        this.control.update(this.vx,this.vy,this.m,60);
     }
 
     getLabel(){
@@ -56,6 +55,7 @@ class Player {
 
     play(scene){
         this.collidableBox = new CollidableBox(this._element,50);
+       // this.element.position.y = ;
         scene.add(this.element);
     }
 }

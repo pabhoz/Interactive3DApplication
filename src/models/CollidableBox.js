@@ -4,6 +4,7 @@ class CollidableBox {
     constructor(mesh, boundingRadius) {
         this.mesh = mesh;
         this.collidableRadius = boundingRadius;
+        this.isFalling = { state: false, acc: 0 };
         // this.initBoundingMesh(this.mesh);
     }
 
@@ -24,6 +25,10 @@ class CollidableBox {
         if(verticalColliding){
             if (intersections.length > 0) {
                 callback(intersections);
+            }else{
+                this.isFalling.state = true;
+                this.isFalling.acc += 1;
+                this.mesh.position.y -= 1 * this.isFalling.acc;
             }
         }else{
             if (intersections.length > 0) {
@@ -49,17 +54,28 @@ class CollidableBox {
         this.collide({ x: 0, y: 0, z: -1 }, callback);
     }
 
-    collideBottom(controls) {
+    collideBottom(control) {
+
         let callback = (intersections) => {
             let distance = intersections[0].distance;
-            if (distance > this.collidableRadius + 1) {
-                //Estoy en el aire!!
-                //console.log(distance);
-                this.mesh.position.y -= (controls.m * fg) / Math.max(0.2,(distance / 500));
+            //console.log(`distance: ${distance} CR: ${this.collidableRadius}`)
+            if (distance > this.collidableRadius) { //inAir
+                this.isFalling.state = true;
+                this.isFalling.acc += 1;
+                this.mesh.position.y -= 1 * this.isFalling.acc;
+                //console.log("in air")
+                control.isInAir = true;
+                
             }
-            if (distance <= this.collidableRadius + 5) {
-                //console.log(intersections[0]);
-                this.mesh.position.y += 1;
+            if (distance <= this.collidableRadius + 1 ) { //over the floor
+                //console.log("over the floor")
+                control.isJumping = false;
+                control.isInAir = false;
+                this.isFalling.state = false;
+                this.isFalling.acc = 0;
+                if(distance <= this.collidableRadius){
+                    this.mesh.position.y +=1;
+                }
                 switch (intersections[0].object.name) {
                     case "plataforma":
                             powerup2.isInUse = true;
