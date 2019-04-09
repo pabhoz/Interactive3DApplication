@@ -5,12 +5,6 @@ class CollidableBox {
         this.mesh = mesh;
         this.collidableRadius = boundingRadius;
         this.isFalling = { state: false, acc: 0 };
-        // this.initBoundingMesh(this.mesh);
-    }
-
-    initBoundingMesh(mesh) {
-        console.log(mesh);
-        this.collidableRadius = mesh.geometry.boundingSphere.radius;
     }
 
     collide(normal, callback, verticalColliding = false) {
@@ -40,6 +34,22 @@ class CollidableBox {
         }
         
     }
+    collideFront(controls) {
+        let callback = () => {
+            //console.log("colliding front");
+            this.mesh.position.x += controls.vx;
+        }
+        this.collide({ x: -1, y: 0, z: 0 }, callback);
+    }
+
+    collideBack(controls) {
+        let callback = () => {
+            //console.log("colliding back");
+            this.mesh.position.x -= controls.vx;
+        }
+        this.collide({ x: 1, y: 0, z: 0 }, callback);
+    }
+
     collideLeft(controls) {
         let callback = () => {
             this.mesh.position.z -= controls.vx;
@@ -63,7 +73,6 @@ class CollidableBox {
                 this.isFalling.state = true;
                 this.isFalling.acc += 1;
                 this.mesh.position.y -= 1 * this.isFalling.acc;
-                //console.log("in air")
                 control.isInAir = true;
                 
             }
@@ -94,6 +103,8 @@ class CollidableBox {
     }
 
     update(controls) {
+        this.collideFront(controls);
+        this.collideBack(controls);
         this.collideLeft(controls);
         this.collideRight(controls);
         this.collideBottom(controls);

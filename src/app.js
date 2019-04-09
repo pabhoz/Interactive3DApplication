@@ -87,7 +87,7 @@ function initScene() {
     //Camera control Plugin
     cameraControl = new THREE.OrbitControls(cameras.current, renderer.domElement);
 
-    lAmbiente = new THREE.AmbientLight(0x3d3c3c);
+    lAmbiente = new THREE.AmbientLight(0xb5b5b5);
     scene.add(lAmbiente);
 
     //Luz Spotlight

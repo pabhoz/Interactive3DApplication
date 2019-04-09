@@ -86,7 +86,7 @@ class Control {
             this.element.position.z += this.vx;
         }
         if (this._jump.isPressed) {
-            console.log(`is Jumping: ${this.isJumping} and is In Air: ${this.isInAir}`)
+            //console.log(`is Jumping: ${this.isJumping} and is In Air: ${this.isInAir}`)
             if(!this.isJumping && !this.isInAir){
                 this.isJumping = true;
                 this.element.position.y += this.jumpForce;
