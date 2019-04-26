@@ -56,6 +56,24 @@ class Player {
     play(scene){
         this.collidableBox = new CollidableBox(this._element,50);
        // this.element.position.y = ;
+       let playerBox = document.createElement("div");
+       playerBox.classList.add("player");
+       let color = document.createElement("div");
+       color.classList.add("color");
+
+       let r = this.element.material.color.r * 255;
+       let g = this.element.material.color.g * 255;
+       let b = this.element.material.color.b * 255;
+
+       color.style.background = `rgb(${r},${g},${b})`;
+       console.log(r);
+
+       let name = document.createElement("div");
+       name.classList.add("name");
+        name.innerHTML = this.name;
+        playerBox.appendChild(color);
+        playerBox.appendChild(name);
+       document.body.appendChild(playerBox);
         scene.add(this.element);
     }
 }

@@ -106,8 +106,9 @@ function initScene() {
 	document.body.appendChild(stats.domElement);
 
     //Init player with controls
-    players.p1 = new Player("P1",null,new Control(),{label: false});
+    players.p1 = new Player("Pabhoz",null,new Control(),{label: false});
     spotLight.target = players.p1.element;
+
 
     //players.p2 = new Player("P2",null,new Control("i","l","k","j"),{label: false});
     //players.p2.play(scene);

@@ -1,3 +1,12 @@
+@font-face {
+    font-family: BadMofo;
+    src: url(../assets/fonts/BadMofo.ttf);
+  }
+  @font-face {
+    font-family: Motorblock;
+    src: url(../assets/fonts/Motorblock.ttf);
+  }
+
 *{
     margin: 0;
     box-sizing: border-box;
@@ -10,8 +19,117 @@ body{
     overflow-y: hidden;
 }
 
-#app{
+#app, #home{
     width: 100vw;
     height: 100vh;
     background: #2c3e50;
+}
+
+#settings, #results, #app{
+    display: none;
+}
+
+#home{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+#home .title{
+    margin-top: 8vh;
+    font-family: BadMofo;
+    font-size: 8vw;
+    color: aliceblue;
+    animation-name: fontGrowth;
+    animation-duration: 1s;
+    margin-bottom: 4vh;
+}
+
+@keyframes fontGrowth {
+    from {font-size: 0vw;}
+    to {font-size: 8vw;}
+  }
+
+#home .suppaButton{
+    font-family: Motorblock;
+    font-size: 3.5vw;
+    color: aliceblue;
+    padding: 1vw 1.5vw;
+    border: 1px solid goldenrod;
+    cursor: pointer;
+}
+
+.start-btn{
+    font-family: Motorblock;
+    text-align: center;
+	display: inline-block;
+	margin:5px;
+    padding: 10px 10px 10px 10px ;
+    background-color: lightgray;
+    text-shadow: -1px -1px black, 1px 1px white;
+    color: gray;
+    -webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	-o-border-radius: 7px;
+	border-radius: 7px;
+    box-shadow: 0 .2em gray; 
+    cursor: pointer;
+    font-size: 3.5vw;
+}
+
+#options{
+    position: absolute;
+    right: 2%;
+    top: 2%;
+    padding: 15px;
+    background: #000;
+    color: white;
+    border-radius: 5px;
+    width: 10vw;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.8);
+    display: none;
+}
+
+#options .options{
+    display: none;
+    margin-top: 10px;
+    border-top: 1px solid white;
+    padding-top: 10px;
+    font-size: 85%;
+}
+
+#options .options div{
+    padding: 2px;
+    transition: all 0.3s ease;
+    margin: 2px;
+}
+#options .options div:hover{
+    padding: 4px;
+    font-size: 95%;
+    background: #2c3e50;
+}
+
+.player{
+    position: absolute;
+    top: 20%;
+    margin: 5px;
+    background: rgba(0,0,0,0.8);
+    border: 1px snow;
+    color: aliceblue;
+    padding: 10px 15px;
+    border-radius: 5px;
+    width: 10vw;
+    display: flex;
+}
+
+.player .color{
+    flex: 4;
+    background: #2c3e50;
+}
+
+.player .name{
+    flex: 6;
+    margin-left: 4px;
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,13 +18,68 @@
     <script src="src/models/Loaders.js"></script>
     <script src="../libs/Stats.js"></script>
 
-    
+
 </head>
-<body onload="webGLStart()">
+
+<body>
+    <!--onload="webGLStart()"-->
+
+    <!-- GUI -->
+    <div id="options">
+        Salir
+    </div>
+    <!-- END GUI -->
+
+    <div id="home">
+
+        <div class="title">Boomber Trooper Reloaded X</div>
+
+        <div class="start-btn" onclick="gameStart()">Comenzar juego</div>
+
+    </div>
+    <div id="settings"></div>
+    <div id="results"></div>
     <div id="app">
         <canvas id="appCanvas" width="100%" height="100%"></canvas>
     </div>
+    <script>
+        window.onload = () => {
+            let options = document.querySelector("#options");
+            options.onclick = () => {
+                showHideGame();
+            }
+            /*options.onmouseover = () => {
+                let children = options.children[0];
+                
+                children.style.display = ( children.style.display != "block") ? "block" : "none";
+            }
+
+            options.onmouseleave = () => { 
+            }*/
+        }
+
+        function gameStart() {
+            showHideGame();
+            webGLStart();
+        }
+
+        function showHideGame() {
+            let home = document.querySelector("#home");
+            if (home.style.display != "flex") {
+                if (home.style.display == "") {
+                    home.style.display = "none";
+                }else{
+                    home.style.display = "flex";
+                }
+            }
+            let app = document.querySelector("#app");
+            app.style.display = (app.style.display != "block") ? "block" : "none";
+            let options = document.querySelector("#options");
+            options.style.display = (options.style.display != "block") ? "block" : "none";
+        }
+    </script>
     <script src="src/app.js"></script>
 </body>
+
 </html>
 <!-- npm init -->
